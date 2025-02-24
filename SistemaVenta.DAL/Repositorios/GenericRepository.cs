@@ -63,7 +63,7 @@ namespace SistemaVenta.DAL.Repositorios
             }
         }
 
-        public async Task<bool> Delete(TModel modelo)
+        public async Task<bool> Eliminar(TModel modelo)
         {
             try
             {

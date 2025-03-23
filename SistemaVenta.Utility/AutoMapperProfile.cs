@@ -51,7 +51,19 @@ namespace SistemaVenta.Utility
             #endregion
 
             #region Categoria
-            CreateMap<Categoria, CategoriaDTO>().ReverseMap();
+            //CreateMap<Categoria, CategoriaDTO>().ReverseMap();
+
+            CreateMap<Categoria, CategoriaDTO>()
+                .ForMember(destino =>
+                    destino.EsActivo,
+                    opt => opt.MapFrom(origen => origen.EsActivo == true ? 1 : 0)
+                );
+
+            CreateMap<CategoriaDTO, Categoria>()
+                .ForMember(destino =>
+                   destino.EsActivo,
+                   opt => opt.MapFrom(origen => origen.EsActivo == 1 ? true : false)
+               );
             #endregion
 
             #region Producto
@@ -80,7 +92,7 @@ namespace SistemaVenta.Utility
                )
                .ForMember(destino =>
                    destino.EsActivo,
-                   opt => opt.MapFrom(origen => origen.EsActivo == 1 ? true : false)
+                   opt => opt.MapFrom(origen => origen.EsActivo == 1)
                );
             #endregion
 

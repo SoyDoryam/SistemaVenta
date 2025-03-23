@@ -95,8 +95,8 @@ namespace SistemaVenta.API.Controllers
         }
 
         [HttpDelete]
-        [Route("Eliminar/{id:int}")]
-        public async Task<IActionResult> Eliminar([FromBody] int id)
+        [Route("Eliminar/{id}")]
+        public async Task<IActionResult> Eliminar( int id)
         {
             var rsp = new Response<bool>();
 

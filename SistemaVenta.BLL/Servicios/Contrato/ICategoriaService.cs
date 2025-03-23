@@ -11,5 +11,8 @@ namespace SistemaVenta.BLL.Servicios.Contrato
     public interface ICategoriaService
     {
         Task<List<CategoriaDTO>> Lista();
+        Task<CategoriaDTO> Crear(CategoriaDTO modelo);
+        Task<bool> Editar(CategoriaDTO modelo);
+        Task<bool> Eliminar(int id);
     }
 }

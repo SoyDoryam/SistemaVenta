@@ -35,5 +35,81 @@ namespace SistemaVenta.BLL.Servicios
                 throw;
             }
         }
+        public async Task<CategoriaDTO> Crear(CategoriaDTO modelo)
+        {
+            try
+            {
+                var categoriaCreada = await _categoriaRepositorio.Crear(_mapper.Map<Categoria>(modelo));
+
+                if (categoriaCreada.IdCategoria == 0)
+                {
+                    throw new TaskCanceledException("No se pudo crear");
+                }
+
+                return _mapper.Map<CategoriaDTO>(categoriaCreada);
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public async Task<bool> Editar(CategoriaDTO modelo)
+        {
+            try
+            {
+                var categoriaModelo = _mapper.Map<Categoria>(modelo);
+
+                var categoriaEncontrada = await _categoriaRepositorio.Obtener(p => p.IdCategoria == categoriaModelo.IdCategoria);
+
+                if (categoriaEncontrada.IdCategoria == null)
+                {
+                    throw new TaskCanceledException("El categoria no existe");
+                }
+
+                categoriaEncontrada.Nombre = categoriaModelo.Nombre;
+                categoriaEncontrada.EsActivo = categoriaModelo.EsActivo;
+                
+
+                bool respuesta = await _categoriaRepositorio.Editar(categoriaEncontrada);
+
+                if (!respuesta)
+                {
+                    throw new TaskCanceledException("No se pudo editar");
+                }
+
+                return respuesta;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public async Task<bool> Eliminar(int id)
+        {
+            try
+            {
+                var categoriaEncontrada = await _categoriaRepositorio.Obtener(p => p.IdCategoria == id);
+
+                if (categoriaEncontrada == null)
+                {
+                    throw new TaskCanceledException("EL categoria no existe");
+                }
+
+                bool respuesta = await _categoriaRepositorio.Eliminar(categoriaEncontrada);
+
+                if (!respuesta)
+                {
+                    throw new TaskCanceledException("No se pudo eliminar");
+                }
+
+                return respuesta;
+            }
+            catch
+            {
+                throw;
+            }
+        }
     }
 }
